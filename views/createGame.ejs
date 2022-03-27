@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/stylesheet.css">
+  <title>The Battleship Game</title>
+</head>
+<body>
+
+
+  <div id="createGame" class="container text-center">
+    <h1><br>The Battleship Game</h1>
+    <br><br>
+    <div v-for="message in messages" id="message" style="display: inline;" class='alert alert-danger'>
+      <span class="glyphicon glyphicon-info-sign"></span> &nbsp;{{message}}
+    </div>
+
+    <div class="centerVertical alert alert-info">
+      <div class="form-group">
+        <label for="username">Choose an username</label>
+        <input v-model="username" type="text" class="form-control" placeholder="Toto" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="gameName">Your game name</label>
+        <input v-model="gameName" type="text" class="form-control" placeholder="MyGame">
+      </div>
+      <button v-on:click="uploadForm" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="/node_modules/vue/dist/vue.js"></script>
+  <script src="/node_modules/vue-resource/dist/vue-resource.js"></script>
+  <script src="/js/createGame.js"></script>
+</body>
+</html>

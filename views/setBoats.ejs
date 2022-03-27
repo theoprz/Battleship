@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/stylesheet.css">
+  <title>The Battleship Game</title>
+</head>
+<body>
+
+<div id="boats">
+
+    <!-- Title -->
+    <div class="container">
+    <div class="row">
+    <h1 class="text-center title">The Battleship Game</h1>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3 text-center">
+        <h3 class="no-margin">Drag&drop your boats :</h3>
+        <h4>(double-click to rotate)</h4>
+
+        <div v-for='boat in battleship.boats' :key='boat.name'>
+            <h3>{{boat.name}}</h3>
+            <div :id='boat.name' v-on:dblclick="rotate(boat.name)" class="divTable draggable boatsTable">
+                <div class="divTableBody">
+                    <div class="divTableRow">
+                        <div v-for='cell in boat.size' class="divTableCell">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-6 text-center">
+        <div id='myGrid' class="divTable center setBoatsTable">
+            <div class="divTableBody">
+                <div class="divTableHeading divTableCell"></div>
+                <div v-for='col in battleship.grid.length' :value="col" class="divTableHeading divTableCell">{{String.fromCharCode(64+col)}}</div>
+                <div v-for='row in battleship.grid.length' :value="row" class="divTableRow">
+                    <div class="divTableHeading divTableCell">{{row}}</div>
+                    <div v-for='cell in battleship.grid.length' :value='cell' class="divTableCell btn-default case">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validate setBoats -->
+        <span style="margin-left:45px;"></span>
+        <button v-on:click='randomSetAndSubmitBoats' type="button" class="btn btn-primary title">Random set & submit</button>
+        <button v-on:click='submitBoats' type="button" class="btn btn-success title">Submit</button>
+        <a href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Cancel & leave game</button></a>
+
+    </div>
+
+    <div class="col-sm-3">
+        <div v-for='error in errors' class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+            &nbsp;{{error}}
+        </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+    <!-- JS -->
+  <script src="/node_modules/vue/dist/vue.js"></script>
+  <script src="/node_modules/vue-resource/dist/vue-resource.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/setBoat.js"></script>
+
+</body>
+</html>

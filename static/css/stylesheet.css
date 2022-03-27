@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+@font-face {
+	font-family: WarWound;
+	src: url("GimmeDanger.ttf");
+}
+
+
+body {
+	background-color: lightslategray;
+	font-family: 'Ubuntu', sans-serif;
+	color: white;
+}
+
+h1, h2, .divTableHeading {
+	font-family: WarWound;
+}
+
+.centerVertical {
+  position:absolute;
+  top:50%;
+  left:50%;
+  padding:15px;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+/* Table with divs */
+.divTable{
+	display: table;
+	border: none;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #ccc;
+	display: table-cell;
+	padding: 0px;
+	width: 45px;
+	height: 45px;
+	min-width: 45px;
+	min-height: 45px;
+}
+.divTableHeading {
+	border:none;
+	text-align:center;
+	vertical-align:middle;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+	width: auto;
+}
+
+#serverMessage {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+#logoutButton {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+}
+
+#myGrid {
+	pointer-events: none;
+}
+
+/*already visited cells*/
+
+#attackGrid .btn-primary, #attackGrid .btn-success, #attackGrid .btn-warning, #attackGrid .btn-danger {
+	pointer-events: none;
+}
+
+.bounceIn {
+	animation-name: bounceIn;
+	animation-duration: 0.5s;
+}
+
+.title {
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+.boatsTable {
+	z-index: 1;
+	transition: transform 0.3s ease-in-out;
+	/*margin-left: 30%;*/
+}
+
+.setBoatsTable {
+	margin-top: 5%;
+}
+
+.boatsTable > .divTableBody > .divTableRow > .divTableCell {
+	background-color: #337ab7;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.no-padding {
+	padding: 0;
+}
+.no-margin {
+	margin: 0;
+}
+
+.rotated {
+	transform: rotate(90deg);
+	transition: transform 0.3s ease-in-out;
+}
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  25% {
+    transform: scale3d(1.4, 1.4, 1.4);
+  }
+  50% {
+    transform: scale3d(1, 1, 1);
+  }
+  75% {
+    transform: scale3d(1.2, 1.2, 1.2);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 1.5s ease-in-out infinite;
+  -moz-animation: rotating 1.5s ease-in-out infinite;
+  -ms-animation: rotating 1.5s ease-in-out infinite;
+  -o-animation: rotating 1.5s ease-in-out infinite;
+  animation: rotating 1.5s ease-in-out infinite;
+}
