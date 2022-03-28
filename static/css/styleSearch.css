@@ -1,0 +1,198 @@
+/*---- FONTS ----*/
+@font-face {
+    font-family: 'dogica';
+    src: url("../../Battleship/static/css/font/dogica.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'pixel';
+    src: url('../../Battleship/static/css/font/pixelmix.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VPpixel';
+    src: url('../../Battleship/static/css/font/VPPixel-Simplified.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/*---- BALISES GENERALES ----*/
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    background-image: url("pictures/loading.png");
+    background-repeat: no-repeat;
+    background-color: rgb(31,27,44);
+    color: #ffffff;
+    margin : 0;
+    background-size: cover;
+
+    /*---- permet d'éviter de surligner les textes ----*/
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, Opéra*/
+    -ms-user-select: none; /* Internet explorer, Edge */
+    user-select: none; /* Propriété standard */
+}
+
+/*permet de retirer la barre de défilement*/
+body::-webkit-scrollbar{
+    display: none;
+}
+
+
+
+
+/*---- FOND ET TITRE ----*/
+.titreSection{
+    text-align: center;
+    font-family: pixel;
+    font-size: 30px;
+    margin-top: 75px;
+    margin-bottom: 50px;
+}
+
+
+/*---- LOADING ----*/
+.loader {
+    margin:auto;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid rgb(234,26,50);
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    margin: 50px 0px;
+}
+
+.paragraphe{
+    font-family: pixel;
+    font-size: 15px;
+    margin: 10px 40px;
+}
+
+.centrer{
+    text-align: center;
+}
+
+.box{
+    margin: 80px auto 30px;
+}
+
+/*---- TRAIT ----*/
+.trait{
+    margin: 30px 300px;
+}
+
+
+/*---- TABLEAU ----*/
+#leaderBoard{
+    font-family: pixel;
+    margin:50px auto;
+    border: 2px solid white;
+}
+
+.premier{
+    background-color:rgb(234,26,50);
+    color:rgb(31,27,44);
+    border-radius: 30px;
+    font-size: 14px;
+}
+
+
+.containerTable{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-evenly;
+
+}
+
+
+.autre{
+    background-color:rgb(31,27,44);
+    color:white;
+    border-radius: 30px;
+    font-size: 11px;
+}
+
+
+
+
+/*---- GAME ----*/
+#containerGame{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#containerGame .boxGame > *{
+    flex: 1 1 0;
+}
+
+.fondBox{
+    background-color:rgb(18, 16, 26);
+    margin: -40px 20px 40px 20px;
+    padding: 80px 20px;
+}
+
+/* bouton pret */
+.pretBtn{
+    padding: 15px 50px;
+    border-radius: 20px;
+    background-color: rgb(234,26,50);
+    color:rgb(31,27,44);
+    font-family: VPpixel;
+    text-decoration: none;
+}
+
+.pretBtn:hover{
+    color: rgb(234,26,50);
+    background-color: rgb(31,27,44);
+}
+
+#board{
+    border: inherit;
+    font-family: pixel;
+    margin:0px auto;
+}
+
+#board td{
+    table-layout: fixed;
+}
+
+.none{
+    border: inherit;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.with{
+    border: 1px solid white;
+    width: 75px;
+    height: 75px;
+}
+

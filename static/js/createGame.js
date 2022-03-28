@@ -21,10 +21,10 @@ var createGame = new Vue({
 			this.messages = [];
 			// If the user has not picked a game, send error message !
 			if (this.username == '') {
-				this.messages.push('Please add an username');
+				this.messages.push('Veuillez ajouter un nom d\'utilisateur');
 			}
 			if (this.gameName == '') {
-				this.messages.push('Please add a game name')
+				this.messages.push('Veuillez préciser le nom du salon')
 			} else {
 				// If the user has correctly added all the information, submit the form
 				this.$http.post('/createGame', {

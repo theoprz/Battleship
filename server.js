@@ -1,5 +1,4 @@
 /****************************   Require Dependencies ************************************/
-
 let express = require('express');
 let ejs = require('ejs');
 let bodyParser = require('body-parser');
@@ -12,9 +11,17 @@ let session = require("express-session")({
   secret: "ISENLILLE2022",
   resave: true,
   saveUninitialized: true
-}); // Session that follows client IMPORTANT do not set secure to true
+});
+let mongoose = require('mongoose');
 var gameServer = require('./gamejs/gameServer.js');
-/********************* Initialize express, session, bodyparser and template engine *********************/
+
+mongoose.connect('mongodb://admin:stillnix@vmi779869.contaboserver.net:27017/battleship?authSource=admin', (err) => {
+	if (!err) {
+		console.log('MongoDB Connection Succeeded.');
+	} else {
+		console.log('Error in DB connection : ' + err);
+	}
+});
 
 let app = express();
 
@@ -73,23 +80,24 @@ let game = require('./routes/game');
 app.use('/game', game);
 let setBoats = require('./routes/setBoats');
 app.use('/setBoats', setBoats);
-let solo = require('./routes/solo');
-app.use('/solo', solo);
 let logout = require('./routes/logout');
 app.use('/logout', logout);
 let login = require('./routes/login')
 
+let searchGame = require('./routes/searchGame')
+app.use('/searchGame', searchGame);
 
-// Main route
-app.get('/', function(req, res) {
-	let correctRoute = gameServer.sendRoute(req.session.username);
-	if (correctRoute === '/') {
-	 	res.render('welcome');
-	 }
-	 else {
-	 	res.redirect(correctRoute);
-	 }
-});
+let register = require('./routes/register')
+app.use('/register', register);
+
+let how2play = require('./routes/how2play')
+app.use('/how2play', how2play);
+
+let leaderboard = require('./routes/leaderboard')
+app.use('/leaderboard', leaderboard);
+
+let index = require('./routes/index');
+app.use('/', index)
 
 
 /**************************************** Listen server *******************************************************/

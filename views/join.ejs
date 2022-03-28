@@ -5,21 +5,20 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="/css/stylesheet.css">
+        <link rel="stylesheet" href="/css/styleAccueil.css">
         <title>The Battleship Game</title>
     </head>
     <body>
-        <h1 class="text-center"><br>The Battleship Game</h1><br>
         <div id="listGames">
           <div class="alert alert-info centerVertical">
-            <h3 class="text-center no-margin">Pick a game</h3><br>
+            <h3 class="text-center no-margin">Choisissez une partie:</h3><br>
             <div class="radio" v-for='element in gamesList'>
               <label><input type="radio" name="optradio" :value="element.name" v-model="picked">{{element.name}}</label>
             </div>
             <br>
             <div class="text-center">
-              <button class="btn btn-primary" id='button' v-on:click="Choose">Choose Game</button>
-              <a href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Cancel & leave game</button></a>
+              <button class="btn btn-primary" id='button' v-on:click="Choose">Choisir cette partie</button>
+              <a href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Annuler & Menu Principal</button></a>
             </div>
           </div>
 

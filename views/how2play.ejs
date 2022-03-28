@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Battleship Game : How to Play</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/stylePages.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/css/pictures/iconePageAccueil.png">
+  </head>
+
+
+  <body>
+    <div id="header">
+        <div id="navbar">
+            <a class="active" href="/how2play">HOW TO PLAY</a>
+            <a href="/">HOME</a>
+            <a href="/leaderboard">LEADERBOARD</a>
+        </div>
+
+        <h1 class="titleGame">BATTLESHIP</h1>
+    </div>
+
+    <hr id="haut" class="trait">
+
+
+
+    <div class="centrer">
+        <img src="/css/pictures/debut.png">
+        <h1 class="titreSection">Comment jouer ?</h1>
+        <p class="paragraphe">La <span>Bataille Navale</span> ou <span>Battleship</span> est un jeu dans lequel vous etes commandant d'une flotte de navire
+            et ou vous devez couler les batiments de votre adversaire. </p>
+        <p class="paragraphe">Sur une grille tenue secrete, vous placerez vos differents navires.</p>
+        <p class="paragraphe">Une fois la partie commencee, a vous de jouer : cherchez et coulez les navires adverses avant que les votres ne soient au fond de l'ocean.
+
+    </div>
+
+
+    <hr class="trait">
+
+
+    <div class="centrer">
+        <h1 class="titreSection">Navires disponibles</h1>
+
+        <div class="containerCard">
+            <img src="/css/pictures/cardP-A.png">
+            <img src="/css/pictures/cardC.png">
+            <img src="/css/pictures/cardC-T.png">
+        </div>
+
+        <div class="containerCard">
+            <img src="/css/pictures/cardT.png">
+        </div>
+    </div>
+
+
+    <hr class="trait">
+
+
+    <div class="centrer">
+        <h1 class="titreSection">Armes disponibles</h1>
+
+        <div class="containerArme">
+            <p class="paragraphe">Pour pouvoir localiser et toucher les navires adverses vous posseder plusieurs armes.
+                <br> Entre le missile, le radar ou encore la torpille, vous avez suffisamment d'outil pour chercher et atteindre la <span>victoire</span>.
+            </p>
+            <div class="containerCard">
+                <div class="cardsN">
+                    <img src="/css/pictures/missile.png">
+                    <h3 class="titreArme">MISSILE</h3>
+                    <p class="paragraphe">C'est l'arme classique : touche et explose la case indiquee</p>
+                </div>
+
+                <div class="cardsN">
+                    <img src="/css/pictures/radar.png">
+                    <h3 class="titreArme">RADAR</h3>
+                    <p class="paragraphe">Le radar vous permet de sonder 9 cases du plateau.
+                        <br> A la case touchee, celle-ci et les 8 adjacentes sont devoilees.
+                    </p>
+                </div>
+
+                <div class="cardsN">
+                    <img src="/css/pictures/torpille.png">
+                    <h3 class="titreArme">TORPILLE</h3>
+                    <p class="paragraphe">Une fois par partie, si vous utilisez sur un navire avec 2 emplacements restants ou moins, la torpille le détruit</p>
+                </div>
+            </div>
+
+            <div class="containerCard">
+                <div class="cardsN">
+                    <img src="/css/pictures/bombe.png">
+                    <h3 class="titreArme">BOMBE</h3>
+                    <p class="paragraphe">Une fois par partie, touche 5 cases en formant une croix :
+                        <br> celle cliquée, puis celles directement en haut, à droite, en bas et à gauche.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="trait">
+
+
+
+
+
+    <div class="footer">
+        <a href="#haut">Retour en haut de la page</a>
+    </div>
+
+
+
+    <script>
+        window.onscroll = function() {myFunction()};
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+          if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+
+          } else {
+            navbar.classList.remove("sticky");
+          }
+        }
+        </script>
+  </body>
+</html>

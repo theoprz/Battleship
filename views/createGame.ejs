@@ -5,14 +5,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/css/stylesheet.css">
-  <title>The Battleship Game</title>
+  <link rel="stylesheet" href="/css/styleAccueil.css">
 </head>
 <body>
 
 
   <div id="createGame" class="container text-center">
-    <h1><br>The Battleship Game</h1>
     <br><br>
     <div v-for="message in messages" id="message" style="display: inline;" class='alert alert-danger'>
       <span class="glyphicon glyphicon-info-sign"></span> &nbsp;{{message}}
@@ -20,14 +18,14 @@
 
     <div class="centerVertical alert alert-info">
       <div class="form-group">
-        <label for="username">Choose an username</label>
+        <label for="username">Choisir un nom d'utilisateur</label>
         <input v-model="username" type="text" class="form-control" placeholder="Toto" autofocus>
       </div>
       <div class="form-group">
-        <label for="gameName">Your game name</label>
-        <input v-model="gameName" type="text" class="form-control" placeholder="MyGame">
+        <label for="gameName">Nom du salon</label>
+        <input v-model="gameName" type="text" class="form-control" placeholder="Ma partie trop cool">
       </div>
-      <button v-on:click="uploadForm" type="submit" class="btn btn-primary">Submit</button>
+      <button v-on:click="uploadForm" type="submit" class="btn btn-primary">Envoyer</button>
     </div>
   </div>
 

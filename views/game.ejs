@@ -12,7 +12,7 @@
 
         <div id="game">
             <div class="container">
-            <a id="logoutButton" href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Cancel & leave game</button></a>
+            <a id="logoutButton" href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Annuler & Menu Principal</button></a>
 
             <div v-if="serverMessage!=''" id="serverMessage" style="display: inline;" class='alert alert-info'><span class="glyphicon glyphicon-info-sign"></span> &nbsp;{{serverMessage}}</div>
 
@@ -42,7 +42,7 @@
 
                 <!-- Player grid -->
                 <div class="col-sm-5 text-center no-padding">
-                    <h3 style="padding-left: 45px;" class="title">Your ships</h3>
+                    <h3 style="padding-left: 45px;" class="title">Vos bateaux</h3>
                     <div id="myGrid" class="divTable center">
                         <div class="divTableBody">
                             <div class="divTableHeading divTableCell"></div>
@@ -74,14 +74,14 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 v-if="serverMessage == 'You won !'" class="modal-title">Congratulations ! You won !<br>Sure you will keep your performance !</h4>
-                  <h4 v-else class="modal-title">Oh ! You have lost !<br>Sure you will do better next time !</h4>
+                  <h4 v-if="serverMessage == 'You won !'" class="modal-title">Bravo ! Tu as gagné !<br>Améliorez vos performances !</h4>
+                  <h4 v-else class="modal-title">Oh ! Vous avez perdu !<br>Vous ferez mieux la prochaine fois !</h4>
                 </div>
                 <div class="modal-body">
-                  <p>Thank you for your participation !</p>
+                  <p>Merci pour votre participation !</p>
                 </div>
                 <div class="modal-footer">
-                  <a href="/logout"><button type="button" class="btn btn-default">Close</button></a>
+                  <a href="/"><button type="button" class="btn btn-default">Fermer</button></a>
                 </div>
               </div>
 

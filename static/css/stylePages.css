@@ -1,0 +1,226 @@
+/*---- FONTS ----*/
+@font-face {
+    font-family: 'dogica';
+    src: url("../../Battleship/static/css/font/dogica.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'pixel';
+    src: url('../../Battleship/static/css/font/pixelmix.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VPpixel';
+    src: url('../../Battleship/static/css/font/VPPixel-Simplified.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/*---- BALISES GENERALES ----*/
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: rgb(31,27,44);
+    color: #ffffff;
+    margin : 0;
+
+    /*---- permet d'éviter de surligner les textes ----*/
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, Opéra*/
+    -ms-user-select: none; /* Internet explorer, Edge */
+    user-select: none; /* Propriété standard */
+}
+
+/*permet de retirer la barre de défilement*/
+body::-webkit-scrollbar{
+    display: none;
+}
+
+
+
+
+
+#header{
+    background-image: url("pictures/fondAccueil.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 35px 0;
+    text-align: center;
+}
+
+/*---- NAV BAR ----*/
+#navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center ;
+    justify-content: space-evenly;
+    text-align: center;
+    margin: 0;
+    padding: 15px 0;
+}
+
+
+#navbar a {
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 17px;
+    border-bottom: 3px solid transparent;
+    font-family: pixel;
+}
+
+#navbar a:hover {
+    color: #ffffff;
+    border-bottom: 2px solid white;
+    border-bottom-style: dashed;
+}
+
+#navbar a.active {
+    border-bottom: 2px solid white;
+    border-bottom-style: dashed;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color:rgb(31,27,44);
+}
+
+
+
+
+
+
+
+
+/*---- FOND ET TITRE ----*/
+.titleGame{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 170px;
+    font-size: 50px;
+    font-family: dogica;
+}
+
+
+
+
+/*---- TRAIT ----*/
+.trait{
+    margin: 80px 300px 90px;
+}
+
+
+.centrer{
+    text-align: center;
+}
+
+.titreSection{
+    font-family: VPpixel;
+    font-size: 30px;
+}
+
+.paragraphe{
+    font-family: pixel;
+    font-size: 15px;
+    margin: 10px 40px;
+}
+
+
+span{
+    color:rgb(234,26,50);
+}
+
+
+
+.containerCard{
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    margin: 50px 0px;
+}
+
+
+.containerArme{
+    background-color:rgb(18, 16, 26);
+    margin: -40px 20px 40px 20px;
+    padding: 80px 20px;
+}
+
+.titreArme{
+    font-size: 20px;
+    font-family: VPpixel;
+}
+
+.containerArme .containerCard > *{
+    flex: 1 1 0;
+}
+
+
+
+
+
+/*---- FOOTER ----*/
+.footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(31,27,44);
+    color: white;
+    text-align: center;
+    font-family: pixel ;
+ }
+
+.footer a{
+     text-decoration: none;
+     color: white;
+     padding-bottom: 50px;
+}
+
+
+
+/*---- LEADERBOARD ----*/
+
+/*---- TABLEAU ----*/
+table{
+    font-family: pixel;
+    margin:50px auto;
+    border: 2px solid white;
+}
+
+.premier{
+    background-color:rgb(234,26,50);
+    color:rgb(31,27,44);
+    border-radius: 30px;
+    font-size: 14px;
+}
+
+
+.containerTable{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-evenly;
+
+}
+
+
+.autre{
+    background-color:rgb(31,27,44);
+    color:white;
+    border-radius: 30px;
+    font-size: 11px;
+}
+
+
+

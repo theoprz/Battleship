@@ -34,8 +34,8 @@ var listGames = new Vue({
 	methods: {
 		Choose: function(event) {
 			// If the user has not picked a game, send error message !
-			if (this.picked == '') {
-				this.message = 'Please choose a game from the list';
+			if (this.picked === '') {
+				this.message = 'Veuillez choisir un salon dans la liste';
 			}
 			else {
 				// If the user has picked an available game, join the game

@@ -15,14 +15,11 @@
 
     <!-- Title -->
     <div class="container">
-    <div class="row">
-    <h1 class="text-center title">The Battleship Game</h1>
-    </div>
-
+        <br><br>
     <div class="row">
     <div class="col-sm-3 text-center">
-        <h3 class="no-margin">Drag&drop your boats :</h3>
-        <h4>(double-click to rotate)</h4>
+        <h3 class="no-margin">Lachez et posez vos bateaux :</h3>
+        <h4>(double-click pour faire une rotation)</h4>
 
         <div v-for='boat in battleship.boats' :key='boat.name'>
             <h3>{{boat.name}}</h3>
@@ -51,9 +48,9 @@
 
         <!-- Validate setBoats -->
         <span style="margin-left:45px;"></span>
-        <button v-on:click='randomSetAndSubmitBoats' type="button" class="btn btn-primary title">Random set & submit</button>
-        <button v-on:click='submitBoats' type="button" class="btn btn-success title">Submit</button>
-        <a href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Cancel & leave game</button></a>
+        <button v-on:click='randomSetAndSubmitBoats' type="button" class="btn btn-primary title">Poser aléatoirement et envoyer</button>
+        <button v-on:click='submitBoats' type="button" class="btn btn-success title">Envoyer</button>
+        <a href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Annuler & Menu Principal</button></a>
 
     </div>
 

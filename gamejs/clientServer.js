@@ -18,17 +18,8 @@ var clientServer = function(gameServer, io) {
 
 				// Check if the player has already joined a game
 				if (self.getUserGame(socket)) {
-
-					// If gametype is solo
-					if (self.getUserGame(socket).gameType == 'solo') {
-						self.handleSoloConnection(socket);
-
-						// If game type is multiplayer
-					} else {
 						self.handleMultiplayerInitialization(socket);
 						self.handleMultiplayerGameConnection(socket);
-					}
-
 					// If the player is joining a game, send him available games
 				} else {
 					self.sendAvailableGames(socket);
@@ -43,66 +34,6 @@ var clientServer = function(gameServer, io) {
 
 
 /******************************** Socket io handlers *************************************/
-
-	/**
-	 * Socket io handler for the solo game type (the opponent is an ai)
-	 * @param  {socket} socket socket of the connected user
-	 * @this {clientServer}
-	 */
-	self.handleSoloConnection = function(socket) {
-		var player = self.gameServer.players[self.getUsername(socket)];
-		var game = self.getUserGame(socket);
-
-		// Let the user begin !
-		player.isTurn = true;
-		// Enemy player is AI
-		var enemyPlayer = game.player_two;
-
-		// Set AI boats
-		enemyPlayer.battleship.randomSetBoats();
-
-		socket.on('attack', function(attackCoordinates) {
-			if (player.isTurn) {
-				// Get attack coordinates
-				var coordinates = [attackCoordinates.row, attackCoordinates.col];
-
-				// Execute attack function
-				self.getUserBattleship(socket).attackEnemy(coordinates, enemyPlayer);
-				self.sendAIResponse(socket);
-
-				// Check if the user has won
-				if (enemyPlayer.battleship.isFleetDestroyed()) {
-					self.sendGameOverStatus(socket);
-					//Disconnect player after 5 minutes
-					setTimeout(function() {
-						self.handleDisconnect(socket);
-					}, 300000);
-				}
-				else {
-					// Set the turn to the AI
-					player.isTurn = false;
-					var AIAttack_coordinates = enemyPlayer.guessCoordinates();
-					enemyPlayer.attackEnemy(AIAttack_coordinates, player);
-
-					// Check if the AI has won
-					if (self.getUserBattleship(socket).isFleetDestroyed()) {
-						self.sendGameOverStatus(socket);
-						//Disconnect player after 5 minutes
-						setTimeout(function() {
-							self.handleDisconnect(socket);
-						}, 300000);
-					}
-
-					setTimeout(function () {
-						player.isTurn = true;
-						self.sendSoloResponse(socket);
-					}, 500);
-				}
-
-			}
-		})
-	};
-
 	/**
 	 * Socket io handler for th initialization page (registers the user id and puts him within a game with another user
 	 * before setting the boats)
@@ -110,10 +41,10 @@ var clientServer = function(gameServer, io) {
 	 * @this {clientServer}
 	 */
 	self.handleMultiplayerInitialization = function(socket) {
-		var username = self.getUsername(socket);
-		var game = self.getUserGame(socket);
-		var player_one = game.player_one;
-		var player_two = game.player_two;
+		let username = self.getUsername(socket);
+		let game = self.getUserGame(socket);
+		let player_one = game.player_one;
+		let player_two = game.player_two;
 
 		// If the user has created or joined a game, put them in the game room
 		self.joinGameRoom(socket);
@@ -122,7 +53,7 @@ var clientServer = function(gameServer, io) {
 		self.gameServer.players[username].saveSocketId(socket.id);
 
 		// If the user is the player who created the game, send wait status (he has to wait for a player to join)
-		if (username == player_one.username) {
+		if (username === player_one.username) {
 			self.sendWaitStatus(socket);
 		}
 
@@ -140,17 +71,17 @@ var clientServer = function(gameServer, io) {
 	/**
 	 * Socket io handler for the game page (main page for the game)
 	 * @param  {socket} socket socket of the connected user
-	 * @this {cleintServer}
+	 * @this {clientServer}
 	 */
 	self.handleMultiplayerGameConnection = function(socket) {
 		var username = self.getUsername(socket);
 
-		var game = self.getUserGame(socket);
+		let game = self.getUserGame(socket);
 
 		// If both users are connected and user boats have been set
 		if (!game.isAvailable()) {
 			// Get enemy player
-			var enemyPlayer = self.getEnemyPlayer(socket);
+			let enemyPlayer = self.getEnemyPlayer(socket);
 
 			// If the other player has not set the boats yet, send the message to the user
 			if (!enemyPlayer.battleship.areBoatsSet) {
@@ -200,7 +131,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the game in which the user is in
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 * @return {game} game object of the player
 	 */
 	self.getUserGame = function(socket) {
@@ -209,7 +140,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the username of the connected user
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 * @return {String}        username of the user
 	 */
 	self.getUsername = function(socket) {
@@ -218,7 +149,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the battleship object of the connected user
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 * @return {battleship} user battleship object
 	 */
 	self.getUserBattleship = function(socket) {
@@ -228,19 +159,19 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Send wait status to the player when no other user has joined the game
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 */
 	self.sendWaitStatus = function(socket) {
 		var status = {
 			status: 'waiting',
-			message: 'Waiting for players to join the game...',
+			message: 'Attente de joueurs pour rejoindre...',
 		}
 		socket.emit('status', status);
 	}
 
 	/**
 	 * When a user connects to the game, send connect status to all players in the game
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 */
 	self.sendConnectStatus = function(socket) {
 		var game = self.getUserGame(socket);
@@ -250,12 +181,12 @@ var clientServer = function(gameServer, io) {
 		// Send message to player one !
 		var status = {
 			status: 'connected',
-			message: "Player " + player_two.username + " is connected ! You are ready to start the game !",
+			message: "Le joueur " + player_two.username + " est connecté ! Vous êtes prêts à lancer la partie !",
 		}
 		socket.broadcast.to(player_one.socketId).emit('status', status);
 
 		// Send a messsage to player_two
-		status.message = "You are  connected with " + player_one.username + " !";
+		status.message = "Vous êtes connectés à " + player_one.username + " !";
 		socket.emit('status', status);
 	}
 
@@ -264,7 +195,7 @@ var clientServer = function(gameServer, io) {
 	 * @param  {socket} socket
 	 */
 	self.joinGameRoom = function(socket) {
-		var game = self.getUserGame(socket);
+		let game = self.getUserGame(socket);
 		socket.join(game.name);
 	}
 
@@ -278,11 +209,11 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Send status that all the boats of the user have been set
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 */
 	self.sendSetBoatStatus = function(socket) {
-		var game = self.getUserGame(socket);
-		var response = {
+		let game = self.getUserGame(socket);
+		let response = {
 			redirect: '/setBoats'
 		};
 		// Send the redirect url to everyone inside the created game room
@@ -291,13 +222,13 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the enemy player of the user
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 * @return {player} player object of the enemy player
 	 */
 	self.getEnemyPlayer = function(socket) {
-		var game = self.getUserGame(socket);
-		var username = self.getUsername(socket);
-		if (game.player_one.username == username) {
+		let game = self.getUserGame(socket);
+		let username = self.getUsername(socket);
+		if (game.player_one.username === username) {
 			return game.player_two;
 		} else {
 			return game.player_one;
@@ -313,7 +244,7 @@ var clientServer = function(gameServer, io) {
 		var enemyPlayer = self.getEnemyPlayer(socket);
 		var response = {
 			status : 'waiting',
-			message: 'Waiting for ' + enemyPlayer.username + " to set his boats",
+			message: 'En attente de ' + enemyPlayer.username + " pour le placement de ses bateaux",
 		}
 		socket.emit('wait', response);
 	}
@@ -324,26 +255,26 @@ var clientServer = function(gameServer, io) {
 	 */
 	self.sendStartGameStatus = function(socket) {
 		var response = {
-				message: 'It is your turn to play',
+				message: 'C\'est à vous de jouer',
 			}
 			// Send message to both players according to whose turn it is to play
 		socket.broadcast.to(self.getEnemyPlayer(socket).socketId).emit('wait', response);
-		response.message = "It is " + self.getEnemyPlayer(socket).username + "'s turn to play";
+		response.message = "C\'est au tour de " + self.getEnemyPlayer(socket).username + " de jouer";
 		socket.emit('wait', response);
 	}
 
 	/**
 	 * Send game over status when a user has won
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 */
 	self.sendGameOverStatus = function(socket) {
-		var response = {
-			message: 'You have lost ! Better luck next time !',
+		let response = {
+			message: 'Vous avez perdu ! Vous aurez plus de chance la prochaine fois !',
 			battleship: self.getEnemyPlayer(socket).battleship
 		};
 		socket.broadcast.to(self.getEnemyPlayer(socket).socketId).emit('finish', response);
 		response = {
-			message: 'You won !',
+			message: 'Vous avez gagné !',
 			battleship: self.getUserBattleship(socket)
 		};
 		socket.emit('finish', response);
@@ -351,42 +282,17 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Send the other player the go ahead to play
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	*/
 	self.sendNextTurnStatus = function(socket) {
 		response = {
-			message: 'It is your turn to play',
+			message: 'C\'est à vous de jouer',
 			battleship: self.getEnemyPlayer(socket).battleship
 		};
 		socket.broadcast.to(self.getEnemyPlayer(socket).socketId).emit('attack', response);
 
 		response = {
-			message: "It is " + self.getEnemyPlayer(socket).username + "'s turn to play",
-			battleship: self.getUserBattleship(socket)
-		};
-		socket.emit('attack', response);
-	}
-
-	/**
-	 * For AI only (single player game)
-	 * When a user has finished his turn, set the turn to the AI
-	 * @param  {socket} socket
-	 */
-	self.sendAIResponse = function(socket) {
-		response = {
-			message: "It is AI's turn to play",
-			battleship: self.getUserBattleship(socket)
-		};
-		socket.emit('attack', response);
-	}
-
-	/**
-	 * When the AI has finished his turn, send the next turn status to the user
-	 * @param  {socket} socket 
-	 */
-	self.sendSoloResponse = function(socket) {
-		response = {
-			message: "It is your turn to play",
+			message: "C\'est au tour de " + self.getEnemyPlayer(socket).username + " de jouer",
 			battleship: self.getUserBattleship(socket)
 		};
 		socket.emit('attack', response);
@@ -394,11 +300,11 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Disconnect a user
-	 * @param  {socket} socket 
+	 * @param  {socket} socket
 	 */
 	self.handleDisconnect = function(socket) {
-		var response = {
-			message: 'You are not connected',
+		let response = {
+			message: 'Vous n\'êtes pas connecté',
 			redirect: '/'
 		}
 		socket.emit('logout', response);

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Battleship Game</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/styleAccueil.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/css/pictures/iconePageAccueil.png">
+</head>
+
+
+<body>
+<form class="modal-content animate" method="post">
+    <h3 class="imgcontainer">Creer un compte</h3>
+
+    <div class="container">
+        <label for="uname"><b>Identifiant</b></label>
+        <input type="text" placeholder="Entrer l'identifiant" name="uname" required>
+
+        <label for="psw"><b>Mot de passe</b></label>
+        <input type="password" placeholder="Entrer le mdp" name="psw" required>
+
+        <label for="pswConf"><b>Confirmer le mot de passe</b></label>
+        <input type="password" placeholder="Confirmer le mdp" name="pswConf" required>
+
+        <button type="submit" class="btnLogin">CREER</button>
+    </div>
+
+    <div class="container">
+        <p class="pasConnecter"><a href="/">Deja un compte ?</a></p>
+    </div>
+</form>
+
+
+
+
+
+<script>
+    window.onscroll = function() {myFunction()};
+
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+</script>
+</body>
+</html>

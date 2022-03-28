@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Battleship Game : leaderBoard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/stylePages.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="css/pictures/iconePageAccueil.png">
+</head>
+
+
+<body>
+<div id="header">
+    <div id="navbar">
+        <a href="/how2play">HOW TO PLAY</a>
+        <a href="/">HOME</a>
+        <a class="active" href="/leaderBoard">LEADERBOARD</a>
+    </div>
+
+    <h1 class="titleGame">BATTLESHIP</h1>
+</div>
+
+<hr id="haut" class="trait">
+
+
+<p class="paragraphe centrer">Tableau des scores</p>
+<table>
+    <tr class="premier">
+        <td>1er</td>
+        <td>
+            <div class="containerTable">
+                <p>"pseudo"</p>
+                <p> "minutes" minutes "secondes" </p>
+            </div>
+        </td>
+        <td>"pieces restantes" navires</td>
+    </tr>
+
+    <tr class="autre">
+        <td>2nd</td>
+        <td>
+            <div class="containerTable">
+                <p>"pseudo"</p>
+                <p> "minutes" minutes "secondes" </p>
+            </div>
+        </td>
+        <td>"pieces restantes" navires</td>
+    </tr>
+
+    <tr class="autre">
+        <td>3ieme</td>
+        <td>
+            <div class="containerTable">
+                <p>"pseudo"</p>
+                <p> "minutes" minutes "secondes" </p>
+            </div>
+        </td>
+        <td>"pieces restantes" navires</td>
+    </tr>
+
+    <tr class="autre">
+        <td>4ieme</td>
+        <td>
+            <div class="containerTable">
+                <p>"pseudo"</p>
+                <p> "minutes" minutes "secondes" </p>
+            </div>
+        </td>
+        <td>"pieces restantes" navires</td>
+    </tr>
+
+    <tr class="autre">
+        <td>5ieme</td>
+        <td>
+            <div class="containerTable">
+                <p>"pseudo"</p>
+                <p> "minutes" minutes "secondes" </p>
+            </div>
+        </td>
+        <td>"pieces restantes" navires</td>
+    </tr>
+
+    <tr class="autre">
+        <td>6ieme</td>
+        <td>
+            <div class="containerTable">
+                <p>"pseudo"</p>
+                <p> "minutes" minutes "secondes" </p>
+            </div>
+        </td>
+        <td>"pieces restantes" navires</td>
+    </tr>
+</table>
+
+
+
+<hr class="trait">
+
+
+
+
+
+<div class="footer">
+    <a href="#haut">Retour en haut de la page</a>
+</div>
+
+
+
+<script>
+    window.onscroll = function() {myFunction()};
+
+    let navbar = document.getElementById("navbar");
+    let sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+</script>
+</body>
+</html>

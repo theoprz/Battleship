@@ -1,4 +1,4 @@
-var Boat = require('./boat.js'); // Require boat object
+let Boat = require('./boat.js'); // Require boat object
 
 /** @type {Object} Battleship class
 * @class battleship class with one per player with all the grids and methods
@@ -93,11 +93,11 @@ function battleship() {
 	 * @type {dictionnary}
 	 */
 	this.boats = {
-		'carrier': new Boat('carrier', 5),
-		'battleship': new Boat('battleship', 4),
-		'cruiser': new Boat('cruiser', 3),
-		'submarine': new Boat('submarine', 3),
-		'destroyer': new Boat('destroyer', 2),
+		'Contre-torpilleur': new Boat('contre-torpilleur', 5),
+		'Porte-Avions': new Boat('Porte-Avions', 4),
+		'Croiseur': new Boat('Croiseur', 3),
+		'Sous-marin': new Boat('Sous-marin', 3),
+		'Torpilleur': new Boat('Torpilleur', 2),
 	};
 
 	/**
@@ -139,10 +139,10 @@ function battleship() {
 		var errors = [];
 		for (var i = 0; i < boat.coordinatesList.length; i++) {
 			if (!this.isInGrid(boat.coordinatesList[i])) {
-				errors.push(boat.name + ' is not perfectly in grid !')
+				errors.push(boat.name + ' n\'est pas parfaitement sur la grille !')
 			}
 			if (!isZoneAvailable(boat.coordinatesList[i], this.grid)) {
-				errors.push('Zone error, ' + boat.name + ' will be too close to another ship !')
+				errors.push('Problème de zone, ' + boat.name + ' est trop proche d\'un autre bâteau !')
 			}
 		}
 		if (errors.length == 0) {
@@ -159,11 +159,11 @@ function battleship() {
 	this.setBoat = function (boat_name) {
 		// This function should not be called if no tests have been made before !
 		if (this.positionIsNotValid(boat_name)) {
-			throw new Error({message: 'Position is not valid'});
+			throw new Error({message: 'La position est invalide'});
 		}
 
-        var boat = this.boats[boat_name];
-        for (var i = 0; i < boat.size; i++) {
+        let boat = this.boats[boat_name];
+        for (let i = 0; i < boat.size; i++) {
             this.grid[boat.coordinatesList[i][0]][boat.coordinatesList[i][1]] = 1;
         }
         boat.isSet = true;
@@ -174,12 +174,12 @@ function battleship() {
 	 * Random position generator for boats
 	 */
 	this.randomSetBoats = function () {
-		for (var boat in this.boats) {
+		for (let boat in this.boats) {
 			while (!this.boats[boat].isSet) {
-				var i = Math.floor(Math.random() * 10); // random int [0..9]
-				var j = Math.floor(Math.random() * 10); // random int [0..9]
-				var rnd = Math.floor(Math.random() + 0.5); // random boolean
-				var dir = "down".repeat(rnd) + "right".repeat(1-rnd);
+				let i = Math.floor(Math.random() * 10); // random int [0..9]
+				let j = Math.floor(Math.random() * 10); // random int [0..9]
+				let rnd = Math.floor(Math.random() + 0.5); // random boolean
+				let dir = "down".repeat(rnd) + "right".repeat(1-rnd);
 				this.boats[boat].setPosition([i, j], dir);
 				this.boats[boat].setCoordinatesList();
 				if (!this.positionIsNotValid(boat)) {
@@ -211,11 +211,11 @@ function battleship() {
 	 * @this {battleship}
 	 */
 	this.sinkBoatIfDestroyed = function(boat_name) {
-		var flag = true;
+		let flag = true;
 		for (coordinates of this.boats[boat_name].coordinatesList) {
-			var x = coordinates[0];
-			var y = coordinates[1];
-			if (this.grid[x][y] != 3) {
+			let x = coordinates[0];
+			let y = coordinates[1];
+			if (this.grid[x][y] !== 3) {
 				flag = false;
 				break;
 			}
@@ -224,8 +224,8 @@ function battleship() {
 			// Sink the boat !!
 			this.boats[boat_name].sink();
 			for (coordinates of this.boats[boat_name].coordinatesList) {
-				var x = coordinates[0];
-				var y = coordinates[1];
+				let x = coordinates[0];
+				let y = coordinates[1];
 				this.grid[x][y] = 4;
 			}
 		}
@@ -239,8 +239,8 @@ function battleship() {
 	this.sinkEnemyBoatIfDestroyed = function(boat_name, enemyPlayer) {
 		if (enemyPlayer.battleship.boats[boat_name].isSunk) {
 			for (coordinates of enemyPlayer.battleship.boats[boat_name].coordinatesList) {
-				var x = coordinates[0];
-				var y = coordinates[1];
+				let x = coordinates[0];
+				let y = coordinates[1];
 				this.attack_grid[x][y] = 4;
 			}
 		}
@@ -269,8 +269,8 @@ function battleship() {
  * @return {Boolean}             false or true
  */
 function isZoneAvailable(coordinates, currentGrid) {
-	var x = coordinates[0];
-	var y = coordinates[1];
+	let x = coordinates[0];
+	let y = coordinates[1];
 
 	for (var i = x-1; i <= x+1; i++) {
 		for (var j = y-1; j <= y+1; j++) {
@@ -283,7 +283,5 @@ function isZoneAvailable(coordinates, currentGrid) {
 	}
 	return true;
 };
-
-
 
 module.exports = battleship;

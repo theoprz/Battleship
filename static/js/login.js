@@ -1,7 +1,7 @@
 Vue.http.options.emulateJSON = true;
 
 // Create a vue holding the information about the user
-var login = new Vue({
+let login = new Vue({
 	el: '#login',
 
 	// Here we can register any values or collections that hold data
@@ -18,7 +18,7 @@ var login = new Vue({
 			this.messages = [];
 			// If the user has not picked a game, send error message !
 			if (this.username == '') {
-				this.messages.push('Please add an username');
+				this.messages.push('Veuillez ajouter un nom d\'utilisateur');
 
 			// If there are no errors
 			} else {

@@ -1,0 +1,419 @@
+/*---- FONTS ----*/
+@font-face {
+    font-family: 'dogica';
+    src: url("../../Battleship/static/css/font/dogica.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'pixel';
+    src: url('../../Battleship/static/css/font/pixelmix.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VPpixel';
+    src: url('../../Battleship/static/css/font/VPPixel-Simplified.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/*---- BALISES GENERALES ----*/
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    background-image: url("pictures/fondAccueil.jpg");
+    background-repeat: no-repeat;
+    background-color: rgb(31,27,44);
+    color: #ffffff;
+    margin : 0;
+    background-size: cover;
+
+    /*---- permet d'éviter de surligner les textes ----*/
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, Opéra*/
+    -ms-user-select: none; /* Internet explorer, Edge */
+    user-select: none; /* Propriété standard */
+}
+
+/*permet de retirer la barre de défilement*/
+body::-webkit-scrollbar{
+    display: none;
+}
+
+
+
+/*---- NAV BAR ----*/
+#navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center ;
+    justify-content: space-evenly;
+    background-color: rgba(255,255,255,0);
+    text-align: center;
+    margin: 15px 0;
+}
+
+#navbar a {
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 17px;
+    border-bottom: 3px solid transparent;
+    font-family: pixel;
+}
+
+#navbar a:hover {
+    color: #ffffff;
+    border-bottom: 2px solid white;
+    border-bottom-style: dashed;
+}
+
+#navbar a.active {
+    border-bottom: 2px solid white;
+    border-bottom-style: dashed;
+}
+
+
+
+
+
+
+/*---- FOND ET TITRE ----*/
+.titleGame{
+    text-align: center;
+    margin-top: 100px;
+    font-size: 60px;
+    font-family: dogica;
+}
+
+
+
+
+
+/*----FORMULAIRE CONNEXION ----*/
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/*---- boutons ----*/
+button {
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover { opacity: 0.8; }
+
+/*---- bouton START ----*/
+.startbtn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 230px;
+    padding: 15px 50px;
+    border-radius: 20px;
+    background-color: rgb(234,26,50);
+    color:rgb(31,27,44);
+    font-family: VPpixel;
+}
+
+.startbtn:hover{
+    opacity: inherit;
+    color: rgb(234,26,50);
+    background-color: rgb(31,27,44);
+}
+
+
+/*---- Titre "se connecter ----*/
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+    font-family: VPpixel;
+    font-size: 25px;
+}
+
+/*---- Boite avec identifiant & password ----*/
+.container {
+    padding: 16px;
+    font-family: pixel;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+.psw a , .pasConnecter a{
+    color:white;
+    text-decoration: none;
+}
+
+.psw a:hover ,.pasConnecter a:hover{
+    text-decoration: underline;
+}
+
+.psw a:visited ,.pasConnecter a:visited{
+    color:white;
+}
+
+.pasConnecter{
+    text-align: center;
+}
+
+
+/*---- boite login ----*/
+.btnLogin{
+    background-color:rgb(241, 74, 93);
+    font-family: pixel;
+}
+
+.btnLogin:hover{
+    background-color:rgb(234,26,50);
+}
+
+/*---- ----*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    padding-top: 60px;
+}
+
+
+.modal-content {
+    background-color: rgb(46, 39, 68);
+    margin: 5% auto 15% auto;
+    border: 1px solid rgb(37, 33, 53);
+    width: 80%;
+}
+
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: rgb(234,26,50);
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)}
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+}
+
+#lab1, #lab2 {
+    font-family: pixel;
+    font-size: 20px;
+}
+
+.centerVertical {
+    position:absolute;
+    top:50%;
+    left:50%;
+    padding:15px;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+/* Table with divs */
+.divTable{
+    display: table;
+    border: none;
+}
+.divTableRow {
+    display: table-row;
+}
+.divTableCell, .divTableHead {
+    border: 1px solid #ccc;
+    display: table-cell;
+    padding: 0px;
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
+}
+.divTableHeading {
+    border:none;
+    text-align:center;
+    vertical-align:middle;
+}
+.divTableFoot {
+    background-color: #EEE;
+    display: table-footer-group;
+    font-weight: bold;
+}
+.divTableBody {
+    display: table-row-group;
+    width: auto;
+}
+
+#serverMessage {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+#logoutButton {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+#myGrid {
+    pointer-events: none;
+}
+
+/*already visited cells*/
+
+#attackGrid .btn-primary, #attackGrid .btn-success, #attackGrid .btn-warning, #attackGrid .btn-danger {
+    pointer-events: none;
+}
+
+.bounceIn {
+    animation-name: bounceIn;
+    animation-duration: 0.5s;
+}
+
+.title {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.boatsTable {
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+    /*margin-left: 30%;*/
+}
+
+.setBoatsTable {
+    margin-top: 5%;
+}
+
+.boatsTable > .divTableBody > .divTableRow > .divTableCell {
+    background-color: #337ab7;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.no-padding {
+    padding: 0;
+}
+.no-margin {
+    margin: 0;
+}
+
+.rotated {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+@keyframes bounceIn {
+    from, 20%, 40%, 60%, 80%, to {
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+    25% {
+        transform: scale3d(1.4, 1.4, 1.4);
+    }
+    50% {
+        transform: scale3d(1, 1, 1);
+    }
+    75% {
+        transform: scale3d(1.2, 1.2, 1.2);
+    }
+    to {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.rotating {
+    -webkit-animation: rotating 1.5s ease-in-out infinite;
+    -moz-animation: rotating 1.5s ease-in-out infinite;
+    -ms-animation: rotating 1.5s ease-in-out infinite;
+    -o-animation: rotating 1.5s ease-in-out infinite;
+    animation: rotating 1.5s ease-in-out infinite;
+}
+
+
+/*----  CREER COMPTE ----*/
+.create{
+    background-color:rgb(31,27,44);
+}
+
+#label {
+    font-family: VPpixel;
+}
+

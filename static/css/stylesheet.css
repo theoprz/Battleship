@@ -2,12 +2,14 @@
 
 @font-face {
 	font-family: WarWound;
-	src: url("GimmeDanger.ttf");
+	src: url("font/GimmeDanger.ttf");
 }
 
 
 body {
-	background-color: lightslategray;
+    background-image: url("pictures/fondAccueil.jpg");
+    background-repeat: no-repeat;
+    background-color: rgb(31,27,44);
 	font-family: 'Ubuntu', sans-serif;
 	color: white;
 }
