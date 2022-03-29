@@ -200,7 +200,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the game in which the user is in
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 * @return {game} game object of the player
 	 */
 	self.getUserGame = function(socket) {
@@ -209,7 +209,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the username of the connected user
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 * @return {String}        username of the user
 	 */
 	self.getUsername = function(socket) {
@@ -218,7 +218,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the battleship object of the connected user
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 * @return {battleship} user battleship object
 	 */
 	self.getUserBattleship = function(socket) {
@@ -228,19 +228,19 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Send wait status to the player when no other user has joined the game
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 */
 	self.sendWaitStatus = function(socket) {
 		var status = {
 			status: 'waiting',
-			message: 'En attente de joueurs...',
+			message: 'Waiting for players to join the game...',
 		}
 		socket.emit('status', status);
 	}
 
 	/**
 	 * When a user connects to the game, send connect status to all players in the game
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 */
 	self.sendConnectStatus = function(socket) {
 		var game = self.getUserGame(socket);
@@ -250,12 +250,12 @@ var clientServer = function(gameServer, io) {
 		// Send message to player one !
 		var status = {
 			status: 'connected',
-			message: "Joueur " + player_two.username + " connecte ! Vous etes prets a rejoindre la partie !",
+			message: "Player " + player_two.username + " is connected ! You are ready to start the game !",
 		}
 		socket.broadcast.to(player_one.socketId).emit('status', status);
 
 		// Send a messsage to player_two
-		status.message = "Vous etes connecte avec " + player_one.username + " !";
+		status.message = "You are  connected with " + player_one.username + " !";
 		socket.emit('status', status);
 	}
 
@@ -278,7 +278,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Send status that all the boats of the user have been set
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 */
 	self.sendSetBoatStatus = function(socket) {
 		var game = self.getUserGame(socket);
@@ -291,7 +291,7 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Get the enemy player of the user
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 * @return {player} player object of the enemy player
 	 */
 	self.getEnemyPlayer = function(socket) {
@@ -313,7 +313,7 @@ var clientServer = function(gameServer, io) {
 		var enemyPlayer = self.getEnemyPlayer(socket);
 		var response = {
 			status : 'waiting',
-			message: 'En attente de ' + enemyPlayer.username + " de mettre ses bateaux",
+			message: 'Waiting for ' + enemyPlayer.username + " to set his boats",
 		}
 		socket.emit('wait', response);
 	}
@@ -324,26 +324,26 @@ var clientServer = function(gameServer, io) {
 	 */
 	self.sendStartGameStatus = function(socket) {
 		var response = {
-				message: 'Votre tour',
+				message: 'It is your turn to play',
 			}
 			// Send message to both players according to whose turn it is to play
 		socket.broadcast.to(self.getEnemyPlayer(socket).socketId).emit('wait', response);
-		response.message = "C'est au tour de " + self.getEnemyPlayer(socket).username + " de jouer";
+		response.message = "It is " + self.getEnemyPlayer(socket).username + "'s turn to play";
 		socket.emit('wait', response);
 	}
 
 	/**
 	 * Send game over status when a user has won
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 */
 	self.sendGameOverStatus = function(socket) {
 		var response = {
-			message: 'Vous avez perdu ! Vous aurez plus de chance la prochaine fois..',
+			message: 'You have lost ! Better luck next time !',
 			battleship: self.getEnemyPlayer(socket).battleship
 		};
 		socket.broadcast.to(self.getEnemyPlayer(socket).socketId).emit('finish', response);
 		response = {
-			message: 'Vous avez gagne !',
+			message: 'You won !',
 			battleship: self.getUserBattleship(socket)
 		};
 		socket.emit('finish', response);
@@ -351,17 +351,17 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Send the other player the go ahead to play
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	*/
 	self.sendNextTurnStatus = function(socket) {
 		response = {
-			message: 'C\'est votre tour de jouer',
+			message: 'It is your turn to play',
 			battleship: self.getEnemyPlayer(socket).battleship
 		};
 		socket.broadcast.to(self.getEnemyPlayer(socket).socketId).emit('attack', response);
 
 		response = {
-			message: "C'est a " + self.getEnemyPlayer(socket).username + " de jouer",
+			message: "It is " + self.getEnemyPlayer(socket).username + "'s turn to play",
 			battleship: self.getUserBattleship(socket)
 		};
 		socket.emit('attack', response);
@@ -374,7 +374,7 @@ var clientServer = function(gameServer, io) {
 	 */
 	self.sendAIResponse = function(socket) {
 		response = {
-			message: "C\'est au tour de l'ordinateur",
+			message: "It is AI's turn to play",
 			battleship: self.getUserBattleship(socket)
 		};
 		socket.emit('attack', response);
@@ -382,11 +382,11 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * When the AI has finished his turn, send the next turn status to the user
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 */
 	self.sendSoloResponse = function(socket) {
 		response = {
-			message: "Votre tour !",
+			message: "It is your turn to play",
 			battleship: self.getUserBattleship(socket)
 		};
 		socket.emit('attack', response);
@@ -394,11 +394,11 @@ var clientServer = function(gameServer, io) {
 
 	/**
 	 * Disconnect a user
-	 * @param  {socket} socket
+	 * @param  {socket} socket 
 	 */
 	self.handleDisconnect = function(socket) {
 		var response = {
-			message: 'Vous etes pas connecte',
+			message: 'You are not connected',
 			redirect: '/'
 		}
 		socket.emit('logout', response);
