@@ -7,13 +7,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/css/stylesheet.css">
-  <title>The Battleship Game</title>
+  <title>Battleship</title>
 </head>
 <body>
 
 <div id="boats">
-
-    <!-- Title -->
     <div class="container">
         <br><br>
     <div class="row">
@@ -46,7 +44,6 @@
             </div>
         </div>
 
-        <!-- Validate setBoats -->
         <span style="margin-left:45px;"></span>
         <button v-on:click='randomSetAndSubmitBoats' type="button" class="btn btn-primary title">Poser aléatoirement et envoyer</button>
         <button v-on:click='submitBoats' type="button" class="btn btn-success title">Envoyer</button>
@@ -66,7 +63,6 @@
 </div>
 </div>
 
-    <!-- JS -->
   <script src="/node_modules/vue/dist/vue.js"></script>
   <script src="/node_modules/vue-resource/dist/vue-resource.js"></script>
   <script src="/socket.io/socket.io.js"></script>

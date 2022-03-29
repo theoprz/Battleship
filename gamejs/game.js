@@ -33,14 +33,14 @@ function game(name, player_one) {
 	 * @this {game}
 	 */
 	this.isAvailable = function() {
-		return this.player_two == null && this.gameType === 'multi';
+		return this.player_two == null && this.gameType == 'multi';
 	};
 
 	/**
 	 * Typer of the game can be 'multi' or 'solo'
 	 * @type {String}
 	 */
-	this.gameType  = 'multi';
+	this.gameType  = 'multi'; 
 
 };
 

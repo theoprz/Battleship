@@ -1,21 +1,21 @@
 /*---- FONTS ----*/
 @font-face {
     font-family: 'dogica';
-    src: url("../../Battleship/static/css/font/dogica.ttf");
+    src: url("font/dogica.ttf");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'pixel';
-    src: url('../../Battleship/static/css/font/pixelmix.ttf');
+    src: url('font/pixelmix.ttf');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'VPpixel';
-    src: url('../../Battleship/static/css/font/VPPixel-Simplified.otf');
+    src: url('font/VPPixel-Simplified.otf');
     font-weight: normal;
     font-style: normal;
 }

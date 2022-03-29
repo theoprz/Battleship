@@ -1,4 +1,4 @@
-let Boat = require('./boat.js'); // Require boat object
+var Boat = require('./boat.js'); // Require boat object
 
 /** @type {Object} Battleship class
 * @class battleship class with one per player with all the grids and methods
@@ -7,7 +7,7 @@ let Boat = require('./boat.js'); // Require boat object
 */
 function battleship() {
 
-	/**
+	/** This is the main grid for the game
 	* @this {battleship}
 	* @return {array} [The array representing the grid]
 	*/
@@ -25,6 +25,8 @@ function battleship() {
 	];
 
 	/**
+	 * Second grid for attack management
+	 * It will be entirely based on the second player or AI
 	 * @type {Array}
 	 */
 	this.attack_grid = [
@@ -40,24 +42,32 @@ function battleship() {
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		];
 
-	/**
+	/** Function to determine wether a boat is on the desired coordinates
 	* @this {battleship}
-	* @param {integers} (x,y)
-	* @return {boolean}
+	* @param {integers} (x,y) Position coordinates
+	* @return {boolean} true if the value is 1, or false
 	*/
 	this.checkPosition = function (x, y) {
-		return this.grid[x][y] === 1;
+		if (this.grid[x][y] == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	};
 
 	/**
+	 * Test wether the attack coordinates have been tested
 	 * @param  {Integer} x x Axis coordinate
 	 * @param  {Integer} y y Axis coordinate
 	 * @return {Boolean}   true if were tested, false otherwise
 	 * @this {battleship}
 	 */
 	this.areAttackCoordinatesTested = function(x,y) {
-		return !(this.attack_grid[x][y] === 0 || this.attack_grid[x][y] === 1);
-
+		if(this.attack_grid[x][y] == 0 || this.attack_grid[x][y] == 1) {
+			return false;
+		}
+		return true;
 	};
 
 	/** Attack Enemy function: Will either hit or miss target. Changes the value of the enemy grid: 0 is water, 1 is boat, 2 is test but miss, 3 is test with a hit, 4 is sunk ...
@@ -66,10 +76,10 @@ function battleship() {
 	* @param {tuple} coordinates Attack coordinates
 	*/
 	this.attackEnemy = function(coordinates, enemyPlayer) {
-		let x = coordinates[0];
-		let y = coordinates[1];
+		var x = coordinates[0];
+		var y = coordinates[1];
 		if (this.areAttackCoordinatesTested(x,y)) {
-			console.log('Cette zone a déja été attaquée !!');
+			console.log('This zone has already been hit !!');
 			return false;
 		}
 		if (enemyPlayer.battleship.checkPosition(x,y)) {
@@ -77,7 +87,7 @@ function battleship() {
 			this.attack_grid[x][y] = 3;
 
 			// Find the boat that has been hit
-			let hitBoat = enemyPlayer.battleship.findHitBoat(x, y);
+			var hitBoat = enemyPlayer.battleship.findHitBoat(x, y);
 			// Sink the boat if it was completely destroyed
 			enemyPlayer.battleship.sinkBoatIfDestroyed(hitBoat.name);
 			this.sinkEnemyBoatIfDestroyed(hitBoat.name, enemyPlayer);
@@ -89,15 +99,16 @@ function battleship() {
 	};
 
 	/**
+	 * Dictionnary with all the boats on this battleship player game
 	 * @this {battleship}
 	 * @type {dictionnary}
 	 */
 	this.boats = {
-		'Contre-torpilleur': new Boat('contre-torpilleur', 5),
-		'Porte-Avions': new Boat('Porte-Avions', 4),
-		'Croiseur': new Boat('Croiseur', 3),
-		'Sous-marin': new Boat('Sous-marin', 3),
-		'Torpilleur': new Boat('Torpilleur', 2),
+		'carrier': new Boat('carrier', 5),
+		'battleship': new Boat('battleship', 4),
+		'cruiser': new Boat('cruiser', 3),
+		'submarine': new Boat('submarine', 3),
+		'destroyer': new Boat('destroyer', 2),
 	};
 
 	/**
@@ -105,8 +116,8 @@ function battleship() {
 	 * @return {Boolean} true if destroyed, false otherwise
 	 */
 	this.isFleetDestroyed = function() {
-		let flag = true;
-		for (let boat in this.boats) {
+		flag = true;
+		for (boat in this.boats) {
 			if (!this.boats[boat].isSunk) {
 				flag = false;
 			}
@@ -139,10 +150,10 @@ function battleship() {
 		var errors = [];
 		for (var i = 0; i < boat.coordinatesList.length; i++) {
 			if (!this.isInGrid(boat.coordinatesList[i])) {
-				errors.push(boat.name + ' n\'est pas parfaitement sur la grille !')
+				errors.push(boat.name + ' is not perfectly in grid !')
 			}
 			if (!isZoneAvailable(boat.coordinatesList[i], this.grid)) {
-				errors.push('Problème de zone, ' + boat.name + ' est trop proche d\'un autre bâteau !')
+				errors.push('Zone error, ' + boat.name + ' will be too close to another ship !')
 			}
 		}
 		if (errors.length == 0) {
@@ -159,11 +170,11 @@ function battleship() {
 	this.setBoat = function (boat_name) {
 		// This function should not be called if no tests have been made before !
 		if (this.positionIsNotValid(boat_name)) {
-			throw new Error({message: 'La position est invalide'});
+			throw new Error({message: 'Position is not valid'});
 		}
 
-        let boat = this.boats[boat_name];
-        for (let i = 0; i < boat.size; i++) {
+        var boat = this.boats[boat_name];
+        for (var i = 0; i < boat.size; i++) {
             this.grid[boat.coordinatesList[i][0]][boat.coordinatesList[i][1]] = 1;
         }
         boat.isSet = true;
@@ -174,12 +185,12 @@ function battleship() {
 	 * Random position generator for boats
 	 */
 	this.randomSetBoats = function () {
-		for (let boat in this.boats) {
+		for (var boat in this.boats) {
 			while (!this.boats[boat].isSet) {
-				let i = Math.floor(Math.random() * 10); // random int [0..9]
-				let j = Math.floor(Math.random() * 10); // random int [0..9]
-				let rnd = Math.floor(Math.random() + 0.5); // random boolean
-				let dir = "down".repeat(rnd) + "right".repeat(1-rnd);
+				var i = Math.floor(Math.random() * 10); // random int [0..9]
+				var j = Math.floor(Math.random() * 10); // random int [0..9]
+				var rnd = Math.floor(Math.random() + 0.5); // random boolean
+				var dir = "down".repeat(rnd) + "right".repeat(1-rnd);
 				this.boats[boat].setPosition([i, j], dir);
 				this.boats[boat].setCoordinatesList();
 				if (!this.positionIsNotValid(boat)) {
@@ -211,11 +222,11 @@ function battleship() {
 	 * @this {battleship}
 	 */
 	this.sinkBoatIfDestroyed = function(boat_name) {
-		let flag = true;
+		var flag = true;
 		for (coordinates of this.boats[boat_name].coordinatesList) {
-			let x = coordinates[0];
-			let y = coordinates[1];
-			if (this.grid[x][y] !== 3) {
+			var x = coordinates[0];
+			var y = coordinates[1];
+			if (this.grid[x][y] != 3) {
 				flag = false;
 				break;
 			}
@@ -224,8 +235,8 @@ function battleship() {
 			// Sink the boat !!
 			this.boats[boat_name].sink();
 			for (coordinates of this.boats[boat_name].coordinatesList) {
-				let x = coordinates[0];
-				let y = coordinates[1];
+				var x = coordinates[0];
+				var y = coordinates[1];
 				this.grid[x][y] = 4;
 			}
 		}
@@ -239,8 +250,8 @@ function battleship() {
 	this.sinkEnemyBoatIfDestroyed = function(boat_name, enemyPlayer) {
 		if (enemyPlayer.battleship.boats[boat_name].isSunk) {
 			for (coordinates of enemyPlayer.battleship.boats[boat_name].coordinatesList) {
-				let x = coordinates[0];
-				let y = coordinates[1];
+				var x = coordinates[0];
+				var y = coordinates[1];
 				this.attack_grid[x][y] = 4;
 			}
 		}
@@ -269,8 +280,8 @@ function battleship() {
  * @return {Boolean}             false or true
  */
 function isZoneAvailable(coordinates, currentGrid) {
-	let x = coordinates[0];
-	let y = coordinates[1];
+	var x = coordinates[0];
+	var y = coordinates[1];
 
 	for (var i = x-1; i <= x+1; i++) {
 		for (var j = y-1; j <= y+1; j++) {
@@ -283,5 +294,7 @@ function isZoneAvailable(coordinates, currentGrid) {
 	}
 	return true;
 };
+
+
 
 module.exports = battleship;

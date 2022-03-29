@@ -15,24 +15,18 @@
             <a id="logoutButton" href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Annuler & Menu Principal</button></a>
 
             <div v-if="serverMessage!=''" id="serverMessage" style="display: inline;" class='alert alert-info'><span class="glyphicon glyphicon-info-sign"></span> &nbsp;{{serverMessage}}</div>
-
-            <!-- grid -->
             <div class="row">
-                <!-- attack grid -->
                 <div class="col-sm-6 text-center no-padding">
                     <h3 style="padding-left: 45px;" class="title">Grille d'attaque</h3>
                     <div id="attackGrid" class="divTable center">
                         <div class="divTableBody">
                             <div class="divTableHeading divTableCell"></div>
 
-                            <!-- Start by making the labels of the different colums  -->
                             <div v-for='col in battleship.attack_grid.length' :value="col" class="divTableHeading divTableCell">{{String.fromCharCode(64+col)}}</div>
 
-                            <!-- Populate each row -->
                             <div v-for='row in battleship.attack_grid.length' :value="row" class="divTableRow">
-                                <!-- row label -->
+
                                 <div class="divTableHeading divTableCell">{{row}}</div>
-                                <!-- cell space (boat cell) -->
                                 <div v-for='col in battleship.attack_grid.length' v-bind:class='attackCellClass(row, col)'  :value='col' v-on:click="attack(row, col)" class="divTableCell"></div>
                             </div>
 
@@ -40,21 +34,15 @@
                     </div>
                 </div>
 
-                <!-- Player grid -->
                 <div class="col-sm-5 text-center no-padding">
                     <h3 style="padding-left: 45px;" class="title">Vos bateaux</h3>
                     <div id="myGrid" class="divTable center">
                         <div class="divTableBody">
                             <div class="divTableHeading divTableCell"></div>
 
-                            <!-- Start by making the labels of the different colums  -->
                             <div v-for='col in battleship.grid.length' :value="col" class="divTableHeading divTableCell">{{String.fromCharCode(64+col)}}</div>
-
-                            <!-- Populate each row -->
                             <div v-for='row in battleship.grid.length' :value="row" class="divTableRow">
-                                <!-- row label -->
                                 <div class="divTableHeading divTableCell">{{row}}</div>
-                                <!-- cell space (boat cell) -->
                                 <div v-for='col in battleship.grid.length' v-bind:class='myCellClass(row, col)' :value='col' class="divTableCell"></div>
                             </div>
 
@@ -70,18 +58,17 @@
           <div class="modal fade" id="myModal" role="dialog" style="color: black;">
             <div class="modal-dialog">
 
-              <!-- Modal content-->
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 v-if="serverMessage == 'You won !'" class="modal-title">Bravo ! Tu as gagné !<br>Améliorez vos performances !</h4>
+                  <h4 v-if="serverMessage === 'Vous avez gagné !'" class="modal-title">Bravo ! Tu as gagné !<br>Améliorez vos performances !</h4>
                   <h4 v-else class="modal-title">Oh ! Vous avez perdu !<br>Vous ferez mieux la prochaine fois !</h4>
                 </div>
                 <div class="modal-body">
                   <p>Merci pour votre participation !</p>
                 </div>
                 <div class="modal-footer">
-                  <a href="/"><button type="button" class="btn btn-default">Fermer</button></a>
+                  <a href="/searchGame"><button type="button" class="btn btn-default">Fermer</button></a>
                 </div>
               </div>
 
@@ -90,8 +77,6 @@
 
         </div>
 
-
-        <!-- JS -->
         <script src="/node_modules/vue/dist/vue.js"></script>
         <script src="/node_modules/vue-resource/dist/vue-resource.js"></script>
         <script src="/socket.io/socket.io.js"></script>

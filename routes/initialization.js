@@ -1,14 +1,10 @@
-/************************************* Require dependencies **********************************************/
-
-var express = require('express');
-var gameServer = require('../server.js').gameServer;
-var io = require('../server.js').io;
-var router = express.Router(); //Create router object
-
-/************************************* Join routes *********************************************************/
+let express = require('express');
+let gameServer = require('../server.js').gameServer;
+let io = require('../server.js').io;
+let router = express.Router();
 
 router.get('/', function(req, res) {
-	var correctRoute = gameServer.sendRoute(req.session.username);
+	let correctRoute = gameServer.sendRoute(req.session.username);
 	if (correctRoute == '/initialization' || correctRoute == '/setBoats') {
 	 	res.render('initialize');
 	 }

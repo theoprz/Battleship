@@ -1,5 +1,6 @@
 var player = require('./player.js'); // Require player object
 var game = require('./game.js'); // Require game object
+var AI = require('./AI.js'); // require AI object
 
 /**
  * Main server object: Responsible for all game and player management.
@@ -28,15 +29,28 @@ function gameServer() {
 
 	/**
 	 * Player two joins a multiplayer game
-	 * @param  {String} gameName   Name of thee game be joined
+	 * @param  {String} gameName   Name of thee game be joined	
 	 * @param  {player} player_two Player who wishes to join the game
 	 * @this {gameServer}
 	 */
 	this.joinMultiplayerGame = function(gameName, player_two) {
 		player_two.game = this.games[gameName];
-		this.games[gameName].player_two = player_two;
+		this.games[gameName].player_two = player_two; 
 		// Update available games
 		this.updateAvailableGames();
+	};
+
+	/**
+	 * Create a solo player game
+	 * @param  {player} player_one Player object who will play the game
+	 * @this {gameServer}
+	 */
+	this.createSoloGame = function(player) {
+		var Game = new game(player.username, player);
+		this.games[player.username] = Game;
+		Game.gameType = 'solo'; // Set gameType to solo
+		Game.player_two = new AI(Game);
+		this.players[player.username].game = Game;
 	};
 
 	/**
@@ -97,7 +111,7 @@ function gameServer() {
 	 * Checks if username already exists
 	 * @param  {String} username username of the new player
 	 * @return {Boolean}          true if already exists, false otherwise
-	 */
+	 */	
 	this.usernameAlreadyExists = function(username) {
 		if (this.players[username]) {
 			return true;
@@ -140,12 +154,12 @@ function gameServer() {
 				}
 				// If the player has created a multiplayer game, but no one has joined
 				else {
-					return '/initialization';
+					return '/initialization'; 
 				}
 			}
 			// If user already has a username
 			else {
-				return '/join';
+				return '/join'; 
 			}
 		}
 		else {

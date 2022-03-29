@@ -1,32 +1,23 @@
 Vue.http.options.emulateJSON = true;
 
-// Connect user with server using socket io
 let socket = io.connect();
 
-// Vue that holds the battleship grid and all the boats of our page
 let boats = new Vue({
 
-    // We want to target the div with an id of 'events'
     el: "#boats",
 
     data: {
-        // Player battleship object (see battleship.js for more information)
         battleship: {grid: []},
-        // String Array containing all the errors that have to be sent to the user
         errors: [],
     },
 
-    // These functions are called only when the vue instance is created
     created: function () {
-        // Get battleship data with grid and boats
         this.$http.get('/setBoats/getBoats').then(function (response) {
             console.log(response);
             this.battleship = response.body.battleship;
         }), function (response) {
             console.log(response);
         };
-
-        // Initialize drag and drop 500 ms after page load (IMPORTANT for Firefox compatibility)
         $(document).ready(function () {
             window.setTimeout(boats.initializeDragAndDrop, 500);
         });
@@ -37,9 +28,7 @@ let boats = new Vue({
     },
 
     methods: {
-        // Rotate the boat on click
         rotate: function (boat_name) {
-            // Check if boat is already set, if not the boat will reset to its original position
             if (this.battleship.boats[boat_name].isSet) {
                 this.reset(boat_name);
                 this.errors.push('Vous ne pouvez pas faire de rotations si le bateau est deja posé !');
@@ -49,7 +38,6 @@ let boats = new Vue({
 
                 let direction = this.battleship.boats[boat_name].direction;
 
-                // Update direction according to the rotation
                 if (direction == 'down') {
                     this.battleship.boats[boat_name].direction = 'right';
                 } else {
@@ -58,9 +46,8 @@ let boats = new Vue({
             }
         },
 
-        // Reset the boat on its original position on click
         reset: function (boat_name) {
-            var boat = $('#' + boat_name);
+            let boat = $('#' + boat_name);
             boat.animate({
                 "left": 0,
                 "top": 0,
@@ -68,7 +55,6 @@ let boats = new Vue({
             this.setBoatOffGrid(boat_name);
         },
 
-        //Make the boats draggable
         makeDraggable: function () {
             $('.draggable').draggable({
                 containment: 'document',
@@ -78,38 +64,25 @@ let boats = new Vue({
             });
         },
 
-        //Make grid in body droppable
         makeDroppable: function () {
             $('body').droppable({
-
-                // What to do after drop (on drop)
                 drop: function (event, ui) {
-
-                    // Get the draggable element (boat) position on the window (in pixels)
                     let pos_left = ui.offset.left;
-                    // console.log(pos_left); // FOR DEBUG
                     let pos_top = ui.offset.top;
-                    // console.log(pos_top); // FOR DEBUG
 
-                    // Get the name of the boat that is being dragged
                     let boat_name = ui.draggable.attr('id');
 
-                    // Set the direction of the boat
                     let direction = boats.battleship.boats[boat_name].direction;
-                    // console.log(direction); // FOR DEBUG
 
-                    // Check if boat was already set
                     if (boats.battleship.boats[boat_name].isSet) {
-                        // Reset the boat coordinates on grid
+
                         boats.setBoatOffGrid(boat_name);
                     }
 
-                    // Execute function to see if there are errors in boat position
                     let errors = boats.isBoatPositionNotValid(boat_name, pos_left, pos_top, direction);
 
 
                     if (errors) {
-                        // Revert boat (move the boat back to its original position)
                         ui.draggable.draggable('option', 'revert', function (event, ui) {
                             $(this).data("uiDraggable").originalPosition = {
                                 top: 0,
@@ -117,85 +90,65 @@ let boats = new Vue({
                             };
                             return true;
                         });
-                        // Send specific errors to the user
                         boats.errors = errors;
                     } else {
-                        // Set the boat on the droppable element
                         ui.draggable.draggable('option', 'revert', 'invalid');
 
-                        //Reset error messages
                         boats.errors = [];
 
-                        // Set the boat on the grid
                         boats.setBoatOnGrid(boat_name);
                     }
                 }
             });
         },
 
-        //Initialize drag and drop
         initializeDragAndDrop: function () {
             this.makeDraggable();
             this.makeDroppable();
         },
 
-        // match boat cell with grid cell and return grid coordinates
         findCase: function (left, top) {
-            for (let i = 1; i <= this.battleship.grid.length; i++) { // IMPORTANT We need 11 values here ! If we reach the last value, it would mean that no cells matched coordinates
+            for (let i = 1; i <= this.battleship.grid.length; i++) {
                 let pos_top = $("#myGrid > .divTableBody > .divTableRow[value='" + i + "']").offset().top;
                 if (pos_top === top) {
                     break;
                 }
             }
-            let k = Math.min(i, 10); // If there are no matches within the rows, set i back to 10 so that the rows don't return UNDEFINED
-            for (let j = 1; j <= this.battleship.grid.length; j++) { // IMPORTANT We need 11 values here ! If we reach the last value, it would mean that no cells matched coordinates
+            let k = Math.min(i, 10);
+            for (let j = 1; j <= this.battleship.grid.length; j++) {
                 let pos_left = $("#myGrid > .divTableBody > .divTableRow[value='" + k + "'] > .divTableCell[value='" + j + "']").offset().left;
-                //console.log(left, pos_left, top, pos_top); // FOR DEBUG ONLY
                 if (pos_left === left) {
                     break;
                 }
             }
-
-            //console.log(String.fromCharCode(64 + j), i); // For DEBUG
-            return [i - 1, j - 1]; // If j-1
-
+            return [i - 1, j - 1];
         },
 
         /**
-         * Check whether the boat's position is valid or not according to the rules of the game
-         * @param  {String}  boat_name Name of the boat to be checked
-         * @param  {Float}  left      Left coordinates
-         * @param  {Float}  top       Top coordinates
-         * @param  {String}  direction Direction of the boat: can be 'right' or 'down'
-         * @return {Boolean}           Return errors array containing all error messages or false if there are no errors
+         * @param  {String}  boat_name
+         * @param  {Float}  left
+         * @param  {Float}  top
+         * @param  {String}  direction
+         * @return {Boolean}
          */
         isBoatPositionNotValid: function (boat_name, left, top, direction) {
             let errors = [];
 
-            // Get our initial coordinates of the boat on the grid
             let coordinates = this.findCase(left, top);
 
-            // Get the boat object in question
             let boat = this.battleship.boats[boat_name];
-            //console.log('Boat coordinatesList: ' + this.battleship.boats[boat_name].coordinatesList); //FOR DEBUG
 
-            // Set these coordinates in boat object
             this.setBoatPosition(boat_name, coordinates, direction);
 
-            //Set all boat coordinates in the boat object
             this.setBoatCoordinatesList(boat_name);
 
 
-            // console.log('Boat position: ' + boat.coordinates + ' ' + boat.direction); // FOR DEBUG
-            // console.log('Boat coordinatesList: ' + boat.coordinatesList); // FOR DEBUG
-            // Check if the boat is not in the grid and follows game rules
-            for (var i = 0; i < boat.coordinatesList.length; i++) {
-                // Check if the boat is not in the grid
+
+            for (let i = 0; i < boat.coordinatesList.length; i++) {
                 if (!this.isInGrid(boat.coordinatesList[i])) {
                     errors.push(boat.name + ' n\'est pas totalement dans la grille !');
                     break;
                 }
-                // Check if the boat is following game rules (not boats must touch each other)
                 if (!this.isZoneAvailable(boat.coordinatesList[i])) {
                     errors.push('Problème dans la zone, le ' + boat.name + ' sera trop proche d\'un autre bateau !');
                     break;
@@ -208,10 +161,9 @@ let boats = new Vue({
         },
 
         /**
-         * Set position of the boat
-         * @param {String} boat_name Boat name that has to be placed
-         * @param {tuple} initial_coordinates Coordinates of the position of the first case
-         * @param {string} direction can be 'right', 'down'
+         * @param {String} boat_name
+         * @param {tuple} initial_coordinates
+         * @param {string} direction
          */
         setBoatPosition: function (boat_name, initial_coordinates, direction) {
             this.battleship.boats[boat_name].coordinates = initial_coordinates;
@@ -219,20 +171,19 @@ let boats = new Vue({
         },
 
         /**
-         * Set the coordinatesList equal to the position of the boat when a initial position and direction have been chosen
-         * @param {String} boat_name Name of the boat whose coordinates have to be set
+         * @param {String} boat_name
          */
         setBoatCoordinatesList: function (boat_name) {
             let boat = this.battleship.boats[boat_name];
             boat.coordinatesList[0] = boat.coordinates;
             switch (boat.direction) {
                 case 'down':
-                    for (var i = 0; i < boat.size; i++) {
+                    for (let i = 0; i < boat.size; i++) {
                         boat.coordinatesList[i] = [boat.coordinates[0] + i, boat.coordinates[1]];
                     }
                     break;
                 case 'right':
-                    for (var i = 0; i < boat.size; i++) {
+                    for (let i = 0; i < boat.size; i++) {
                         boat.coordinatesList[i] = [boat.coordinates[0], boat.coordinates[1] + i];
                     }
                     break;
@@ -240,8 +191,7 @@ let boats = new Vue({
         },
 
         /**
-         * Test to check wether these coordinates can be placed on the grid
-         * @param  {tuple}  coordinates coordinates of the zone
+         * @param  {tuple}  coordinates
          * @return {Boolean}
          */
         isInGrid: function (coordinates) {
@@ -255,10 +205,9 @@ let boats = new Vue({
         },
 
         /**
-         * Checks wether the zone is availbale in and around the zone
-         * @param  {tuple}  coordinates Coordinates of the zone
-         * @param  {Array}  currentGrid Player gris
-         * @return {Boolean}             false or true
+         * @param  {tuple}  coordinates
+         * @param  {Array}  currentGrid
+         * @return {Boolean}
          */
         isZoneAvailable: function (coordinates) {
             let x = coordinates[0];
@@ -277,8 +226,7 @@ let boats = new Vue({
         },
 
         /**
-         * Set the boat on the battleship grid ... This will set the isSet variable of the boat to true !
-         * @param {String} boat_name The name of the boat that will be set on the grid
+         * @param {String} boat_name
          */
         setBoatOnGrid: function (boat_name) {
             let boat = this.battleship.boats[boat_name];
@@ -306,18 +254,13 @@ let boats = new Vue({
         },
 
         submitBoats: function (event) {
-            // Check if all boats have been set before submitting
             if (!this.areBoatsSet()) {
                 this.errors.push("Veuillez placer tous les bateaux avant d\'envoyer !");
-            }
-
-            // All boats habe been checked ! Submit to server
-            else {
+            }else{
                 console.log(this.battleship);
                 this.$http.post('/setBoats/sendBoats', {boats: this.battleship.boats}).then(function (response) {
                     window.location.href = response.data.redirect;
                 }), function (response) {
-                    //If there is an error put it in the console
                     console.log(response);
                 };
             }
@@ -327,7 +270,6 @@ let boats = new Vue({
             this.$http.post('/setBoats/sendBoats', {randomSet: true}).then(function (response) {
                 window.location.href = response.data.redirect;
             }), function (response) {
-                //If there is an error put it in the console
                 console.log(response);
             };
         },

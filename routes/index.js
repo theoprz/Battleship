@@ -15,16 +15,12 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function (req, res, next) {
-    //console.log(req.body);
     User.findOne({username:req.body.uname},function(err,data){
         if(data){
 
             if(data.password===req.body.psw){
-                //console.log("Done Login");
                 req.session.userId = data.unique_id;
-                //console.log(req.session.userId);
                 res.render('searchGame');
-
             }else{
                 res.render('/');
             }

@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    console.log(req.body);
     let personInfo = req.body;
 
 
@@ -35,7 +34,7 @@ router.post('/', function(req, res, next) {
                         });
 
                     }).sort({_id: -1}).limit(1);
-                    res.render('/');
+                    res.render('index');
                 }else{
                     res.render("register")
                 }

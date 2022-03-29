@@ -1,4 +1,3 @@
-/****************************   Require Dependencies ************************************/
 let express = require('express');
 let ejs = require('ejs');
 let bodyParser = require('body-parser');
@@ -40,26 +39,17 @@ app.use('/node_modules', express.static(__dirname + '/node_modules')); // animat
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 
-
-/******************************************** Initialize gameServer ******************************************/
-
 var gameServer = new gameServer();
-
-/************************************************* Socket.io *************************************************/
 
 let io = socket(server);
 
-// Use shared session middleware for socket.io
 io.use(sharedsession(session, {
-    autoSave:true  // setting autoSave:true
+    autoSave:true
 }));
 
-// Initialize a client server
 let ClientServer = require('./gamejs/clientServer.js');
 let clientServer = new ClientServer(gameServer, io);
 clientServer.init();
-
-/******************************************** Export relevant objects ***************************************/
 
 module.exports = {
 	server: server,
@@ -67,8 +57,6 @@ module.exports = {
 	gameServer: gameServer,
 	clientServer: clientServer,
 };
-
-/*************************************** include routes *****************************************************/
 
 let initialization = require('./routes/initialization');
 app.use('/initialization', initialization);
