@@ -79,7 +79,7 @@ function battleship() {
 		var x = coordinates[0];
 		var y = coordinates[1];
 		if (this.areAttackCoordinatesTested(x,y)) {
-			console.log('This zone has already been hit !!');
+			console.log('Cette zone a deja ete touchee !!');
 			return false;
 		}
 		if (enemyPlayer.battleship.checkPosition(x,y)) {
@@ -104,11 +104,11 @@ function battleship() {
 	 * @type {dictionnary}
 	 */
 	this.boats = {
-		'carrier': new Boat('carrier', 5),
-		'battleship': new Boat('battleship', 4),
-		'cruiser': new Boat('cruiser', 3),
-		'submarine': new Boat('submarine', 3),
-		'destroyer': new Boat('destroyer', 2),
+		'Contre-torpilleur': new Boat('contre-torpilleur', 5),
+		'Porte-Avions': new Boat('Porte-Avions', 4),
+		'Croiseur': new Boat('Croiseur', 3),
+		'Sous-marin': new Boat('Sous-marin', 3),
+		'Torpilleur': new Boat('Torpilleur', 2),
 	};
 
 	/**
@@ -150,10 +150,10 @@ function battleship() {
 		var errors = [];
 		for (var i = 0; i < boat.coordinatesList.length; i++) {
 			if (!this.isInGrid(boat.coordinatesList[i])) {
-				errors.push(boat.name + ' is not perfectly in grid !')
+				errors.push(boat.name + ' n est pas parfaitement sur la grille !')
 			}
 			if (!isZoneAvailable(boat.coordinatesList[i], this.grid)) {
-				errors.push('Zone error, ' + boat.name + ' will be too close to another ship !')
+				errors.push('Zone error, ' + boat.name + ' sera trop proche d un autre bateau!')
 			}
 		}
 		if (errors.length == 0) {

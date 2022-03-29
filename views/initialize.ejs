@@ -10,7 +10,7 @@
 <body>
 <br><br>
 <div class="container text-center" id='gameStatus'>
-  <p><span class="alert alert-success"><span v-if="message.charAt(0) == 'V'" class="rotating glyphicon glyphicon-refresh"></span><span v-else class="glyphicon glyphicon-info-sign"></span> &nbsp;{{message}}</span></p><br><br>
+  <p><span class="alert alert-success"><span v-if="message.charAt(0) == 'E'" class="rotating glyphicon glyphicon-refresh"></span><span v-else class="glyphicon glyphicon-info-sign"></span> &nbsp;{{message}}</span></p><br><br>
   <a href="/logout"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Cancel & leave game</button></a>
   <button v-on:click='startGame' type="button" class="hidden btn btn-primary">Start Game</button>
 </div>
